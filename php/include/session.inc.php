@@ -1,11 +1,16 @@
 <?php
-    require_once("common.inc.php"); 
+    require_once("common.inc.php");
 
     function isAuth() 
     {
         if (isset($_SESSION["is_auth"])) 
         {
-            return $_SESSION["is_auth"];
+            if ($_SESSION["is_auth"])
+            {
+                $userId = getUserIdByUserEmail($_SESSION["email"]);
+                dbQuery("UPDATE user SET last_authentification = NOW() WHERE user_id = {$userId}");
+                return true;
+            }
         }
         else 
         {
@@ -14,12 +19,12 @@
     }
 
     function auth($email, $password) 
-    {                                  
-        if (checkPass($email, $password)) 
+    {
+        if (checkPass($email, $password))
         {
             $_SESSION["is_auth"] = true;
-            $_SESSION["email"] = $_POST["email"];
-            $_SESSION["userID"] = getUserID($email, $password);
+            $_SESSION["email"] = $email;
+            $_SESSION["userId"] = getUserIdByUserEmail($email);
             return true;
         }
         else 
@@ -29,17 +34,10 @@
         }
     }
 
-    function getLogin() 
-    {                                 
-        if (isAuth()) 
-        {
-            return $_SESSION["email"];
-        }
-    }
-
     function logOut()
     {
         $_SESSION = array();
         $_SESSION["is_auth"] = false;
+        $_SESSION["email"] = "";
         session_destroy();
     }

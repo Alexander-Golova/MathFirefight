@@ -15,3 +15,9 @@ function onTaskClick()
         document.cookie = "targetTask = " + this.id;
     });
 }
+
+function clearCookie()
+{
+    document.cookie = "targetTask = " + "";
+    document.cookie = "targetPlayer = " + "";
+}

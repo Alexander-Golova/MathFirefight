@@ -19,3 +19,4 @@
 	session_start();
 
 	$_SESSION["is_auth"] = isAuth();
+	

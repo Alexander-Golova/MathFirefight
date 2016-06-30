@@ -8,10 +8,10 @@
         <h2 align="center">Победители</h2>
           <table>
             <tbody>
-              {foreach $best_users as $best_user}
+              {foreach $best_players as $best_player}
                 <tr class="player">
-                  <td class="left">{$best_user.first_name} {$best_user.last_name}</td>
-                  <td class="right">{$best_user.lives}</td>
+                  <td class="left">{$best_player.first_name} {$best_player.last_name}</td>
+                  <td class="right">{$best_player.lives}</td>
                 </tr>
               {/foreach}
             </tbody>

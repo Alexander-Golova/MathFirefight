@@ -11,7 +11,7 @@
               <p>
                 {$archive_task.text_problem}
               </p>
-              <a href="#" class="solution_button" id="solution_button{$archive_task.archive_task_id}" onclick="showSolution()">
+              <a href="#" class="solution_button" id="solution_button{$archive_task.archive_task_id}">
                 Ответ:<p class="solution" id="solution{$archive_task.archive_task_id}">{$archive_task.response_task}</p>
               </a>
             </div>

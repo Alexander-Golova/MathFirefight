@@ -1,17 +1,29 @@
 <?php
     require_once("php/include/common.inc.php");
     require_once("libs/Smarty.class.php");
+
+    if ($_SESSION["is_auth"])
+    {
+        if (isUserInGame(getUserIdByUserEmail($_SESSION["email"])))
+        {
+            header("Location: game.php");
+        }
+    }
+
     $smarty = new Smarty();
 
-    $users = getUsers();
-    $tasks = getTasks(10);
-    $chances = $_SESSION["is_auth"] ? getChances($_SESSION["email"]) : "0 : 0";
+    $players = getPlayers();
 
-    $isAuth = $_SESSION["is_auth"]; // Откройте common.inc.php
+    $isAuth = $_SESSION["is_auth"]; // Открыть common.inc.php
+    $startDateGame = convertDateRu(NEXT_GAME_DATE);
+    $startTimeGame = date('H:i', strtotime(NEXT_GAME_DATE));
 
     $smarty->assign(password, $_COOKIE["password"]);
-    $smarty->assign("users", $users);
-    $smarty->assign("tasks", $tasks);
-    $smarty->assign("chances", $chances);
+    $smarty->assign("players", $players);
     $smarty->assign("isAuth", $isAuth);
+
+    $smarty->assign("startDateGame", $startDateGame);
+    $smarty->assign("startTimeGame", $startTimeGame);
+    $smarty->assign("doesGameStart", doesGame());
+
     $smarty->display("index.tpl");

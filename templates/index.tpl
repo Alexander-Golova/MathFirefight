@@ -1,48 +1,63 @@
 <!DOCTYPE HTML>
 <html>
   {include file="head.tpl"}
-  <body>
+  <body onload="clearCookie();">
     {include file="header.tpl"}
     <section class="content">
-	  <div class="block_caption"><h1 align="center">ИГРА</h1></div>
+
+	  <div class="block_caption"><h1 align="center">Войти в игру</h1></div>
 	  <div class="players">
 		<h2 align="center">Игроки</h2>
-        <table>
-          <tbody>
-            {foreach $users as $user}
-              <tr class="player" id="user{$user.user_game_id}" onclick="onPlayerClick()">
-                <td class="left">{$user.first_name} {$user.last_name}</td>
-                <td class="right">{$user.lives}</td>
-              </tr>
-            {/foreach}
-          </tbody>
-        </table>
+		<div class="player_list">
+          <table>
+            <tbody class="players_container">
+              {foreach $players as $player}
+                <tr class="player" id="player{$player.player_id}">
+                  <td class="left">{$player.first_name} {$player.last_name}</td>
+                  <td class="right">{$player.lives}</td>
+                </tr>
+              {/foreach}
+            </tbody>
+          </table>
+        </div>
 	  </div>
 
-	  <div class="block_center">
-		<h2 align="center">Шанс</h2>
-		<div class="chance">
-		  {$chances}
-		</div>
+	  <div class="add_game">
 		<p>
-		  Выбери слева игрока, в которого желаешь выстрелить, а справа задачу, которую хочешь решить.
-		  Набери ответ и нажми на кнопку выстрел.
+		  Для того, чтобы начать играть в интеллектуальной игре Математическая перестрелка, вам необходимо:
 		</p>
-		<form name="response_form" action="php/response.php" method="post" class="response_form">
-		  <div class="block_response">
-            <input type="text" name="answer" placeholder="Ответ"/>
-          </div>
-          <div class="button_response">
-            <button {if !$isAuth} disabled {/if}>Выстрелить</button>
-		  </div>
-		</form>
+		<p>
+		  1. Зарегистрироваться, если вы ещё не зарегистрированы. <a href="registration.php">Регистрация</a>
+		</p>
+		<p>
+		  2. Войти на сайт за 20 минут до начала игры. <a href="login.php">Вход</a>
+		</p>
+		<p>
+		  3. Вступить в игру.
+		</p>
+		{if !$doesGameStart}
+		  <form name="enter_game" action="php/enter_game.php" method="post" class="enter_game">
+            <div class="enter_game">
+              <button {if !$isAuth} disabled {/if}>Вступить в игру</button>
+		    </div>
+		  </form>
+        {/if}
 	  </div>
 
-	  <div class="tasks">
-	    <h2 align="center">Задачи</h2>
-        {foreach $tasks as $task}
-          <div class="task" id="task{$task.task_id}" onclick="onTaskClick()">{$task.text_problem}</div>
-        {/foreach}
+	  <div class="start_time">
+        <p align="center">
+          Ближайшая игра состоится
+        </p>
+        <p align="center">
+          <b>{$startDateGame.day} {$startDateGame.month} {$startDateGame.year} в {$startTimeGame}</b>
+        </p>
+        <p>
+          <b>Тема игры:</b> основные комбинаторные принципы.
+        </p>
+        <p>
+          Перед игрой повторите правило суммы и произведения, разупорядочивание, перестановки, размещения
+          и сочетания без повторения.
+        </p>
       </div>
     </section>
     {include file="footer.tpl"}

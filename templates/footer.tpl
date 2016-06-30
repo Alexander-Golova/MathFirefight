@@ -7,3 +7,4 @@
 
 <script src="js/jquery.js"></script>
 <script src="js/targetClick.js"></script>
+<script src="js/ajax.js"></script>
